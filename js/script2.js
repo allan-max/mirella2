@@ -98,12 +98,11 @@ async function buscarRespostaSwiftie(mensagemUsuario) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                // Atualizado para o modelo mais recente e garantido do Groq
                 model: "llama-3.1-8b-instant", 
                 messages: [
                     {
                         role: "system",
-                        content: "Você é um assistente virtual especialista na Taylor Swift. Você está no site que um namorado fez de presente para a namorada dele. Responda de forma curta, em português, com muita empolgação, usando emojis fofos (✨💖🐍🦋) e fazendo referências inteligentes às 'Eras', álbuns e letras das músicas da Taylor Swift. Seja muito amigável e romântico."
+                        content: "Você é um assistente virtual especialista na Taylor Swift. Responda de forma curta, em português, com muita empolgação, usando emojis fofos (✨💖🐍🦋) e fazendo referências inteligentes às 'Eras', álbuns e letras das músicas da Taylor Swift. Curiosidades sobre a Taylor Swift, tanto vida amorosa, quanto musicas. Seja muito amigável, responda de forma curta"
                     },
                     {
                         role: "user",
