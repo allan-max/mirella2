@@ -89,7 +89,7 @@ const GROQ_API_KEY = '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';
 
 async function buscarRespostaSwiftie(mensagemUsuario) {
     try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const response = await fetch('https://corsproxy.io/?https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${GROQ_API_KEY}`,
