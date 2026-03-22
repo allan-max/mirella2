@@ -87,16 +87,19 @@ function addMessage(text, sender) {
 // Sua chave descartável do Groq
 const GROQ_API_KEY = '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'; 
 
+// Função que faz a chamada para a API do Groq
 async function buscarRespostaSwiftie(mensagemUsuario) {
     try {
-        const response = await fetch('https://corsproxy.io/?https://api.groq.com/openai/v1/chat/completions', {
+        // Tiramos o corsproxy e voltamos para o link direto do Groq
+        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${GROQ_API_KEY}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: "llama3-8b-8192", 
+                // Atualizado para o modelo mais recente e garantido do Groq
+                model: "llama-3.1-8b-instant", 
                 messages: [
                     {
                         role: "system",
@@ -110,19 +113,22 @@ async function buscarRespostaSwiftie(mensagemUsuario) {
             })
         });
 
+        const data = await response.json();
+
+        // Se o Groq devolver um erro (como o 400), vamos capturar o motivo exato
         if (!response.ok) {
-            throw new Error(`Erro de rede: ${response.status}`);
+            console.error("Detalhes do erro do Groq:", data);
+            throw new Error(data.error?.message || `Erro de rede: ${response.status}`);
         }
 
-        const data = await response.json();
         return data.choices[0].message.content;
 
     } catch (error) {
         console.error("Erro ao chamar o Groq:", error);
-        return "Ops! Perdi o sinal com a central das Eras... Tente de novo! 💔";
+        // Agora o erro vai aparecer no chat para sabermos o que arrumar
+        return "Ops! O sistema da Taylor disse: " + error.message;
     }
 }
-
 // Evento de clique do botão Enviar
 btnEnviar.addEventListener('click', async () => {
     const userText = chatInput.value.trim();
