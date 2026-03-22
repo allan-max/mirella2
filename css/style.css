@@ -1,0 +1,167 @@
+/* Reseta as margens e define o fundo */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffe6e6; /* Um rosa bem clarinho */
+    overflow: hidden; /* Esconde a barra de rolagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif; /* Fonte padrão para o player */
+}
+
+/* Garante que a foto fique acima dos corações */
+.center-container {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Estilo e animação da bolinha da foto */
+.floating-img {
+    width: 250px; /* Tamanho padrão para PC */
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover; /* Garante que a foto não fique esticada */
+    border: 5px solid #ff4d4d;
+    box-shadow: 0 10px 25px rgba(255, 77, 77, 0.4);
+    cursor: pointer;
+    animation: float 3s ease-in-out infinite; /* Animação de flutuar */
+    transition: transform 0.3s, width 0.3s, height 0.3s; /* Transição suave na mudança de tamanho */
+}
+
+/* Efeito ao passar o mouse por cima */
+.floating-img:hover {
+    transform: scale(1.05);
+}
+
+/* Keyframes para fazer a imagem subir e descer */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Estilo base dos corações gerados pelo JS */
+.heart {
+    position: absolute;
+    top: -50px;
+    color: #ff4d4d;
+    user-select: none;
+    z-index: 1;
+    animation: fall linear forwards;
+}
+
+/* Keyframe para a queda dos corações */
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+    }
+}
+
+/* Tela preta de transição (começa como um ponto minúsculo no centro) */
+#transition-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 100;
+    pointer-events: none;
+    transition: transform 1s ease-in-out;
+}
+
+/* Classe adicionada no clique que faz o ponto preto cobrir tudo */
+#transition-overlay.active {
+    transform: translate(-50%, -50%) scale(300);
+}
+
+/* ===========================================
+   NOVO: MINI PLAYER RETRÁTIL
+============================================== */
+.mini-player {
+    position: fixed;
+    bottom: 20px;
+    right: 0; /* Posição quando aberto */
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 2px solid #ff4d4d;
+    border-right: none;
+    border-radius: 15px 0 0 15px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.4s ease-in-out;
+    z-index: 200; /* Acima dos corações e da foto, mas abaixo da transição preta */
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Classe que esconde o player jogando ele pra fora da tela à direita, deixando só o botão */
+.mini-player.closed {
+    transform: translateX(calc(100% - 40px));
+}
+
+.toggle-btn {
+    background: #ff4d4d;
+    border: none;
+    width: 40px;
+    height: 50px;
+    border-radius: 13px 0 0 13px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+}
+
+.player-content {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.player-content span {
+    font-size: 0.8rem;
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+/* Estilizando o controle padrão de áudio */
+audio {
+    height: 30px;
+    width: 200px; /* Largura padrão PC */
+}
+
+/* ===========================================
+   NOVO: RESPONSIVIDADE (Celular)
+============================================== */
+
+/* Para telas menores que 768px (Tablets e Celulares em pé) */
+@media (max-width: 768px) {
+    .floating-img {
+        width: 180px; /* Foto menor no celular */
+        height: 180px;
+    }
+}
+
+/* Para telas muito pequenas (menos de 400px) */
+@media (max-width: 400px) {
+    .floating-img {
+        width: 150px;
+        height: 150px;
+        border-width: 3px; /* Borda mais fina */
+    }
+    
+    /* Ajuste do player para não ocupar a tela toda */
+    audio {
+        width: 160px;
+    }
+}

@@ -1,0 +1,267 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Georgia', serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ===========================================
+   FUNDO NEON
+============================================== */
+#neon-bg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Fica atrás de tudo */
+    pointer-events: none;
+}
+
+.neon-heart {
+    position: absolute;
+    color: transparent;
+    text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 20px #ff4d4d;
+    opacity: 0.3; /* Bem suave para não atrapalhar a leitura */
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+    20% { opacity: 0.4; }
+    80% { opacity: 0.4; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+
+/* ===========================================
+   CABEÇALHO E CONTADOR (Mantidos)
+============================================== */
+.fixed-counter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(15, 15, 15, 0.95);
+    border-bottom: 2px solid #ff4d4d;
+    z-index: 1000;
+    padding: 15px 0;
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.2);
+}
+
+.counter-content {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.fixed-counter h3 {
+    color: #aaaaaa;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.contador-box { font-size: 1.6rem; color: #fff; }
+.numero { font-weight: bold; color: #ff4d4d; }
+
+/* ===========================================
+   CONTEÚDO PRINCIPAL E PEDIDO (Mantidos)
+============================================== */
+.content-wrapper {
+    padding-top: 120px; 
+    padding-bottom: 100px; /* Mais espaço pro player não cobrir nada */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;
+}
+
+.pedido-section {
+    width: 90%;
+    max-width: 1000px;
+}
+
+.pedido-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.foto-frame { flex: 1; max-width: 450px; }
+.img-pedido {
+    width: 100%;
+    border-radius: 15px;
+    border: 4px solid #fff;
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.5); /* Sombra neon na foto */
+}
+
+.texto-wrapper { flex: 1; text-align: center; }
+.legenda-pedido {
+    font-size: 1.8rem;
+    line-height: 1.4;
+    font-style: italic;
+    color: #ffe6e6;
+    margin-bottom: 20px;
+}
+
+/* ===========================================
+   CHAT SWIFTIE BOT
+============================================== */
+.chat-section {
+    width: 90%;
+    max-width: 500px;
+    font-family: 'Arial', sans-serif;
+}
+
+.chat-container {
+    background-color: rgba(30, 30, 30, 0.8);
+    border: 1px solid #ff4d4d;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.2);
+}
+
+.chat-header {
+    background-color: #ff4d4d;
+    padding: 15px;
+    text-align: center;
+}
+
+.chat-header h4 { margin-bottom: 5px; color: #fff; }
+.chat-header p { font-size: 0.8rem; color: #ffe6e6; }
+
+.chat-messages {
+    height: 250px;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+.message.bot {
+    background-color: #333;
+    color: #fff;
+    align-self: flex-start;
+    border-bottom-left-radius: 5px;
+}
+
+.message.user {
+    background-color: #ff4d4d;
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 5px;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    background-color: #222;
+    border-top: 1px solid #444;
+}
+
+#chat-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background-color: #444;
+    color: #fff;
+}
+
+#btn-enviar {
+    background-color: transparent;
+    color: #ff4d4d;
+    border: none;
+    padding: 0 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ===========================================
+   MINI PLAYER RETRÁTIL
+============================================== */
+.mini-player {
+    position: fixed;
+    bottom: 30px;
+    right: 0; /* Aberto por padrão fica no 0 */
+    background-color: rgba(20, 20, 20, 0.95);
+    border: 1px solid #ff4d4d;
+    border-right: none;
+    border-radius: 20px 0 0 20px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.4s ease-in-out;
+    z-index: 2000;
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.5);
+}
+
+/* Classe que esconde o player jogando ele pra fora da tela à direita */
+.mini-player.closed {
+    transform: translateX(calc(100% - 40px));
+}
+
+.toggle-btn {
+    background: #ff4d4d;
+    border: none;
+    width: 40px;
+    height: 50px;
+    border-radius: 20px 0 0 20px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-content {
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.player-content span {
+    font-family: 'Arial', sans-serif;
+    font-size: 0.8rem;
+    color: #aaaaaa;
+}
+
+audio {
+    height: 30px;
+    width: 200px;
+}
+
+/* ===========================================
+   RESPONSIVIDADE (Celular)
+============================================== */
+@media (max-width: 768px) {
+    .pedido-container { flex-direction: column; gap: 20px; }
+    .foto-frame { width: 100%; max-width: 350px; }
+    .legenda-pedido { font-size: 1.4rem; padding: 0 10px; }
+    .content-wrapper { padding-top: 110px; }
+    
+    /* Player menor no celular */
+    audio { width: 150px; }
+}

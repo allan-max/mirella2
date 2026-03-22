@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História ❤️</title>
+    <link rel="stylesheet" href="css/style2.css">
+</head>
+<body>
+    
+    <div id="neon-bg-container"></div>
+
+    <header class="fixed-counter">
+        <div class="counter-content">
+            <h3>Nosso Tempo Juntos</h3>
+            <div id="contador" class="contador-box"></div>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        <section class="pedido-section">
+            <div class="pedido-container">
+                <div class="foto-frame">
+                    <img src="img/mi.jpg" alt="Foto do Pedido" class="img-pedido">
+                </div>
+                <div class="texto-wrapper">
+                    <p class="legenda-pedido">
+                        "Foi aqui aonde a nossa historia oficial começou"
+                    </p>
+                    <span class="coracao-divisor">❤️</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="chat-section">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <h4>✨ Swiftie Bot</h4>
+                    <p>Pergunte qualquer coisa sobre a loirinha!</p>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot">Olá! Prontos para falar sobre as Eras da Taylor? 💖</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                    <button id="btn-enviar">Enviar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="mini-player" class="mini-player closed">
+        <button id="toggle-player" class="toggle-btn">🎵</button>
+        <div class="player-content">
+            <span>Nossa Música</span>
+            <audio id="audio-track" controls loop>
+                <source src="Taylor Swift - Wood (Lyrics).mp3" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </div>
+    </div>
+
+    <script src="js/script2.js"></script>
+</body>
+</html>
