@@ -81,7 +81,7 @@ function addMessage(text, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-const GROQ_API_KEY = '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'; 
+const GROQ_API_KEY = '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'; 
 
 async function buscarRespostaSwiftie(mensagemUsuario) {
     try {
