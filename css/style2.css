@@ -21,7 +21,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Fica atrás de tudo */
+    z-index: -1; 
     pointer-events: none;
 }
 
@@ -29,7 +29,7 @@ body {
     position: absolute;
     color: transparent;
     text-shadow: 0 0 5px #ff4d4d, 0 0 10px #ff4d4d, 0 0 20px #ff4d4d;
-    opacity: 0.3; /* Bem suave para não atrapalhar a leitura */
+    opacity: 0.3; 
     animation: floatUp linear infinite;
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 /* ===========================================
-   CABEÇALHO E CONTADOR (Mantidos)
+   CABEÇALHO E CONTADOR
 ============================================== */
 .fixed-counter {
     position: fixed;
@@ -74,11 +74,11 @@ body {
 .numero { font-weight: bold; color: #ff4d4d; }
 
 /* ===========================================
-   CONTEÚDO PRINCIPAL E PEDIDO (Mantidos)
+   CONTEÚDO PRINCIPAL E PEDIDO
 ============================================== */
 .content-wrapper {
     padding-top: 120px; 
-    padding-bottom: 100px; /* Mais espaço pro player não cobrir nada */
+    padding-bottom: 40px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -102,7 +102,7 @@ body {
     width: 100%;
     border-radius: 15px;
     border: 4px solid #fff;
-    box-shadow: 0 0 20px rgba(255, 77, 77, 0.5); /* Sombra neon na foto */
+    box-shadow: 0 0 20px rgba(255, 77, 77, 0.5); 
 }
 
 .texto-wrapper { flex: 1; text-align: center; }
@@ -203,7 +203,7 @@ body {
 .mini-player {
     position: fixed;
     bottom: 30px;
-    right: 0; /* Aberto por padrão fica no 0 */
+    right: 0; 
     background-color: rgba(20, 20, 20, 0.95);
     border: 1px solid #ff4d4d;
     border-right: none;
@@ -215,7 +215,6 @@ body {
     box-shadow: -5px 5px 15px rgba(0,0,0,0.5);
 }
 
-/* Classe que esconde o player jogando ele pra fora da tela à direita */
 .mini-player.closed {
     transform: translateX(calc(100% - 40px));
 }
@@ -254,6 +253,52 @@ audio {
 }
 
 /* ===========================================
+   LINHA DO CORAÇÃO ANIMADO (SVG)
+============================================== */
+#svg5 {
+    display: block;
+    margin: 0 auto 80px auto; 
+    width: 90%;
+    max-width: 400px; 
+    overflow: visible;
+}
+
+svg path#line {
+    fill: none;
+    stroke: #e00000;
+    stroke-width: 2;
+    stroke-linecap: butt;
+    stroke-linejoin: round;
+    stroke-miterlimit: 4;
+    stroke-dasharray:none;
+    stroke-opacity: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: dash 4s linear infinite;
+}
+
+svg path#heart {
+    transform-origin: 50% 50%;
+    animation: blink 4s linear infinite;
+}
+
+@keyframes dash {
+    0% { stroke-dashoffset: 1; }
+    80% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes blink {
+    0% { opacity: 0; transform: scale(0); }
+    60% { opacity: 0; transform: scale(0); }
+    70% { opacity: 1; transform: scale(1.2); }
+    75% { opacity: 1; transform: scale(1.0); }
+    80% { opacity: 1; transform: scale(1.2); }
+    85% { opacity: 1; transform: scale(1.0); }
+    100% { opacity: 0; transform: scale(1.0); }
+}
+
+/* ===========================================
    RESPONSIVIDADE (Celular)
 ============================================== */
 @media (max-width: 768px) {
@@ -262,6 +307,207 @@ audio {
     .legenda-pedido { font-size: 1.4rem; padding: 0 10px; }
     .content-wrapper { padding-top: 110px; }
     
-    /* Player menor no celular */
     audio { width: 150px; }
+}
+
+/* ===========================================
+   DIA DOS NAMORADOS (Surpresa)
+============================================== */
+@import url(https://fonts.googleapis.com/css?family=Shadows+Into+Light);
+
+#valentine-overlay {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: #ffe6e6;
+    z-index: 9999; 
+}
+
+.val-table {
+    display: table;
+    width: 100%;
+    height: 100vh;
+    table-layout: fixed;
+}
+
+.val-cell {
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'Shadows Into Light', cursive;
+    color: #111;
+}
+
+.val-wrapper {
+    width: 90vmin;
+    height: 90vmin;
+    position: relative;
+    margin: 5vmin auto;
+}
+
+@-webkit-keyframes throb {
+    0% { -webkit-transform: scale(1); }
+    35% { -webkit-transform: scale(1.2); }
+    85% { -webkit-transform: scale(1); }
+}
+
+@keyframes throb {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.2); }
+    85% { transform: scale(1); }
+}
+
+.val-wrapper.throb {
+    -webkit-animation: throb 0.5s infinite;
+    animation: throb 0.5s infinite;
+    animation-delay: 0.8s;
+}
+
+.val-wrapper input[type="checkbox"] {
+    display: none;
+}
+
+/* CORREÇÃO DE RESPONSIVIDADE AQUI (Tamanho da fonte menor para caber "você") */
+.val-wrapper input[type="checkbox"] + label {
+    width: 30vmin; height: 30vmin;
+    line-height: 30vmin;
+    display: inline-block;
+    position: absolute;
+    font-size: 10vmin; /* Era 30vmin, agora cabe no celular! */
+    text-align: center;
+    transition: all 1s ease;
+    text-shadow: 1vmin 1vmin 5vmin rgba(0,0,0,0.5);
+}
+
+.val-wrapper label:hover {
+    color: #c32a2a;
+    cursor: pointer;
+}
+
+.val-wrapper #ck1 + label,
+.val-wrapper #ck2 + label {
+    border-radius: 50%;
+    top: 0;
+}
+
+.val-wrapper #ck1:checked + label,
+.val-wrapper #ck2:checked + label,
+.val-wrapper #ck3:checked + label {
+    background: #c32a2a;
+    font-size: 0;
+    transition: all 1s ease;
+}
+
+.val-wrapper #ck1 + label { left: 0; }
+.val-wrapper #ck2 + label { right: 10vmin; }
+
+.val-wrapper #ck1:checked + label,
+.val-wrapper #ck2:checked + label {
+    width: 54vmin; height: 54vmin;
+    border-radius: 50%;
+    line-height: 54vmin;
+}
+
+.val-wrapper #ck2:checked + label { right: 0; }
+
+.val-wrapper #ck3 + label {
+    bottom: 5vmin; left: 50%;
+    margin: 0 -9vmin;
+    background-color: transparent;
+}
+
+.val-wrapper #ck3:checked + label {
+    width: 49.5vmin; height: 49.5vmin;
+    bottom: 17.28vmin; left: 29.16vmin;
+    transform: rotate(45deg);
+    line-height: 4.86vmin;
+}
+
+.val-wrapper span {
+    display: inline-block;
+    text-align: left;
+    position: absolute;
+    bottom: 0vmin; left: 0vmin;
+    margin-bottom: -3vmin;
+    font-size: 5vmin;
+    color: #999;
+    pointer-events: none; 
+}
+
+/* ===========================================
+   ESTILO DA CARTA MENSAL (DIA 17)
+============================================== */
+.letter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000; 
+    padding: 20px;
+}
+
+.letter-paper {
+    background-color: #fff9f0; 
+    width: 90%;
+    max-width: 500px;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    font-family: 'Georgia', serif;
+    color: #333;
+    line-height: 1.6;
+    transform: rotate(-1deg); 
+    animation: fadeInLetter 0.8s ease-out;
+}
+
+@keyframes fadeInLetter {
+    from { opacity: 0; transform: translateY(20px) rotate(0deg); }
+    to { opacity: 1; transform: translateY(0px) rotate(-1deg); }
+}
+
+.letter-header {
+    text-align: right;
+    font-style: italic;
+    margin-bottom: 20px;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.letter-content {
+    font-size: 1.1rem;
+    white-space: pre-wrap; 
+}
+
+.letter-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: #ff4d4d;
+}
+
+.close-letter-btn {
+    margin-top: 20px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Arial', sans-serif;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 480px) {
+    .letter-paper {
+        padding: 25px;
+        font-size: 0.95rem;
+    }
 }

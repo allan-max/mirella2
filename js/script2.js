@@ -69,28 +69,22 @@ setInterval(createNeonHeart, 1500);
 // 4. LÓGICA DO CHAT DA TAYLOR SWIFT (GROQ)
 // ==========================================
 
-// Variáveis do DOM que estavam faltando
 const chatInput = document.getElementById('chat-input');
 const btnEnviar = document.getElementById('btn-enviar');
 const chatMessages = document.getElementById('chat-messages');
 
-// Função para adicionar mensagens na tela do chat
 function addMessage(text, sender) {
     const msgDiv = document.createElement('div');
     msgDiv.classList.add('message', sender);
     msgDiv.innerText = text;
     chatMessages.appendChild(msgDiv);
-    // Rola o chat para baixo automaticamente
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Sua chave descartável do Groq
 const GROQ_API_KEY = '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'; 
 
-// Função que faz a chamada para a API do Groq
 async function buscarRespostaSwiftie(mensagemUsuario) {
     try {
-        // Tiramos o corsproxy e voltamos para o link direto do Groq
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
             headers: {
@@ -114,7 +108,6 @@ async function buscarRespostaSwiftie(mensagemUsuario) {
 
         const data = await response.json();
 
-        // Se o Groq devolver um erro (como o 400), vamos capturar o motivo exato
         if (!response.ok) {
             console.error("Detalhes do erro do Groq:", data);
             throw new Error(data.error?.message || `Erro de rede: ${response.status}`);
@@ -124,20 +117,17 @@ async function buscarRespostaSwiftie(mensagemUsuario) {
 
     } catch (error) {
         console.error("Erro ao chamar o Groq:", error);
-        // Agora o erro vai aparecer no chat para sabermos o que arrumar
         return "Ops! O sistema da Taylor disse: " + error.message;
     }
 }
-// Evento de clique do botão Enviar
+
 btnEnviar.addEventListener('click', async () => {
     const userText = chatInput.value.trim();
     if (userText === '') return;
 
-    // Adiciona a mensagem do usuário
     addMessage(userText, 'user');
     chatInput.value = '';
 
-    // Mostra "Digitando..." temporariamente
     const typingId = 'typing-' + Date.now();
     const typingMsg = document.createElement('div');
     typingMsg.classList.add('message', 'bot');
@@ -146,17 +136,134 @@ btnEnviar.addEventListener('click', async () => {
     chatMessages.appendChild(typingMsg);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Chama a API do Groq
     const respostaBot = await buscarRespostaSwiftie(userText);
 
-    // Remove o "Digitando..." e coloca a resposta real
     document.getElementById(typingId).remove();
     addMessage(respostaBot, 'bot');
 });
 
-// Permite enviar a mensagem apertando a tecla "Enter"
 chatInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         btnEnviar.click();
     }
 });
+
+// ==========================================
+// 5. SURPRESA DO DIA DOS NAMORADOS (12/06)
+// ==========================================
+function setupValentineSurprise() {
+    const hoje = new Date();
+    const mes = hoje.getMonth(); // Janeiro é 0, Junho é 5
+    const dia = hoje.getDate();
+
+    // Checa se hoje é dia 12 de Junho
+    if (mes === 5 && dia === 12) {
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'valentine-overlay';
+        overlay.style.display = 'block'; 
+        
+        overlay.innerHTML = `
+            <div class="val-table">
+                <div class="val-cell">
+                    <form>
+                        <div class="val-wrapper" id="val-wrap">
+                            <input type="checkbox" id="ck1"/>
+                            <label for="ck1">Eu</label>
+                            
+                            <input type="checkbox" id="ck2"/>
+                            <label for="ck2">amo</label>
+                            
+                            <input type="checkbox" id="ck3"/>
+                            <label for="ck3">você</label>
+                            
+                            <span>(clica nas palavras)</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        const ck1 = document.getElementById('ck1');
+        const ck2 = document.getElementById('ck2');
+        const ck3 = document.getElementById('ck3');
+        const wrapper = document.getElementById('val-wrap');
+
+        function checkClick() {
+            if (ck1.checked && ck2.checked && ck3.checked) {
+                if (!wrapper.classList.contains('throb')) {
+                    wrapper.classList.add('throb');
+                    
+                    // LÓGICA NOVA: Espera 4 segundos (4000 ms) e some com a tela
+                    setTimeout(() => {
+                        overlay.style.transition = 'opacity 1.5s ease';
+                        overlay.style.opacity = '0'; // Faz esmaecer
+                        
+                        // Espera a animação de sumir terminar para deletar o código HTML
+                        setTimeout(() => {
+                            overlay.remove();
+                        }, 1500);
+                    }, 4000);
+                }
+            } else {
+                if (wrapper.classList.contains('throb')) {
+                    wrapper.classList.remove('throb');
+                }
+            }
+        }
+
+        ck1.addEventListener('change', checkClick);
+        ck2.addEventListener('change', checkClick);
+        ck3.addEventListener('change', checkClick);
+    }
+}
+
+setupValentineSurprise();
+
+// ==========================================
+// 6. CARTA AUTOMÁTICA TODO DIA 17
+// ==========================================
+function verificarCartaMensal() {
+    const hoje = new Date();
+    const dia = hoje.getDate();
+    
+    const dataFormatada = hoje.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric'
+    });
+
+    if (dia === 17) {
+        const overlay = document.createElement('div');
+        overlay.className = 'letter-overlay';
+        overlay.id = 'monthly-letter';
+
+        overlay.innerHTML = `
+            <div class="letter-paper">
+                <div class="letter-header">${dataFormatada}</div>
+                <div class="letter-content">
+Minha querida Mirella,
+
+Hoje é dia 17… o nosso dia.
+E sempre que ele chega, eu paro um instante para lembrar de tudo que a gente construiu até aqui — dos pequenos momentos que, sem perceber, viraram parte de mim.
+
+Queria que, ao abrir este site, você sentisse um pouco do que eu sinto todos os dias: a sorte imensa de ter você ao meu lado.
+
+Desde setembro, quando a nossa história começou oficialmente, minha vida ganhou mais cor, mais calma e mais sentido. E o mais bonito é saber que, a cada dia, eu descubro um novo motivo pra te amar ainda mais.
+
+Obrigado por ser minha parceira, meu refúgio e também minha melhor escolha.
+
+Com todo o meu amor ❤️
+                </div>
+                <div class="letter-footer">Feliz mais um mês juntos!</div>
+                <button class="close-letter-btn" onclick="document.getElementById('monthly-letter').remove()">Fechar Carta</button>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+    }
+}
+
+verificarCartaMensal();
